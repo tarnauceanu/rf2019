@@ -15,18 +15,21 @@ public class Rf_lab3 {
                         learningSet = FileUtils.readLearningSetFromFile("data.csv");
 			int numberOfPatterns = learningSet.length;
 			int numberOfFeatures = learningSet[0].length;
+                        List<Integer> closestIndex = new ArrayList<Integer>();
+                        List<String> closestClass = new ArrayList<String>();
                         searchSet = FileUtils.readLearningSetFromFile("in.csv");
                         for (int i = 0; i < searchSet.length; i++){
                             int accuracy = 100;
                             int k = 1;
-                            List<Integer> closestIndex = new ArrayList<Integer>();
-                            List<String> closestClass = new ArrayList<String>();
+                            
                             do{
                             double[] distance = new double[learningSet.length];
                             for (int j = 0; j < learningSet.length; j++){
                                 distance[j] = euclidianDistance(learningSet, searchSet, i, j);
                             }
                             double[] last_distance = distance;
+                            closestIndex.clear();
+                            closestClass.clear();
                             // System.out.print(String.format("Searched class for %s %s is: ", searchSet[i][0], searchSet[i][1]));
                             for(int o = 0; o < k; o++ ){
                                 int closestPattern = 0;
@@ -45,8 +48,8 @@ public class Rf_lab3 {
                             accuracy = Collections.frequency(closestClass, closestClass.get(0))*100/(closestClass.size());
                             k+=2;
                             } while (accuracy > 90);
-                            System.out.println(String.format("Searched class for %s, %s is: %s - accouracy %s, k = %s ", searchSet[i][0], searchSet[i][1],
-                                                        closestClass.get(0), accuracy, k ));
+                            System.out.println(String.format("Searched class for %s, %s is: %s - accouracy %s, k = %s (%s)", searchSet[i][0], searchSet[i][1],
+                                                        closestClass.get(0), accuracy, k , Collections.frequency(closestClass, closestClass.get(0))));
                         }
 		} catch (USVInputFileCustomException e) {
 			System.out.println(e.getMessage());
