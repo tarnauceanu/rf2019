@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rf_lab5;
+package rf_lab7;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package rf_lab5;
+package rf_lab7;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

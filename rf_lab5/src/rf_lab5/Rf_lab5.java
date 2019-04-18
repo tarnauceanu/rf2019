@@ -7,7 +7,7 @@ import java.util.List;
 import static rf_lab5.DistanceUtils.dCityDistance;
 import static rf_lab5.DistanceUtils.euclidianDistance;
 
-public class Rf_lab3 {
+public class Rf_lab5 {
 	public static void main(String[] args) {
 		String[][] learningSet;
                 String[][] searchSet;
@@ -15,13 +15,12 @@ public class Rf_lab3 {
                         learningSet = FileUtils.readLearningSetFromFile("data.csv");
 			int numberOfPatterns = learningSet.length;
 			int numberOfFeatures = learningSet[0].length;
-                        List<Integer> closestIndex = new ArrayList<Integer>();
-                        List<String> closestClass = new ArrayList<String>();
                         searchSet = FileUtils.readLearningSetFromFile("in.csv");
                         for (int i = 0; i < searchSet.length; i++){
                             int accuracy = 100;
                             int k = 1;
-                            
+                            List<Integer> closestIndex = new ArrayList<Integer>();
+                            List<String> closestClass = new ArrayList<String>();
                             do{
                             double[] distance = new double[learningSet.length];
                             for (int j = 0; j < learningSet.length; j++){

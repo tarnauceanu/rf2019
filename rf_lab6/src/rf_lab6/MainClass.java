@@ -1,12 +1,15 @@
 package rf_lab6;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 public class MainClass {
 	public static void main(String[] args) {
 		String[][] learningSet;
 		try {
 			learningSet = FileUtils.readLearningSetFromFile("in.csv");
-                        double[] grades = {3.8, 5.75, 6.25, 7.25, 8.5};
+                        double[] grades = {3.8, 5.75, 6.25, 7.25, 8.5, 9.2, 10};
 			printGrades(grades, learningSet);
 			int numberOfPatterns = learningSet.length;
 			int numberOfFeatures = learningSet[0].length;
@@ -52,27 +55,44 @@ public class MainClass {
         String[] nearestNeighbors = new String[k];
         String[] nearestNeighborClass = new String[k];
 
+        int veryGood = 0;
+        int good = 0;
         int sufficient = 0;
         int insufficient = 0;
-
-	    for(int i = 0; i < k; i++) {
+	for(int i = 0; i < k; i++) {
             int index = t.get(i).y;
             nearestNeighbors[i] = learningSet[index][0];
             nearestNeighborClass[i] = learningSet[index][1];
-            if(learningSet[index][1].equals("sufficient"))
+            if (learningSet[index][1].equals("very good"))
+                veryGood++;
+            else if (learningSet[index][1].equals("good"))
+                good++;
+            else if(learningSet[index][1].equals("sufficient"))
                 sufficient++;
-            else
+            else 
                 insufficient++;
         }
+        List<Integer> classes = Arrays.asList(veryGood, good, sufficient, insufficient);
         System.out.println(k + "-NN");
         System.out.println("Nearest neighbors: " + Arrays.toString(nearestNeighbors));
         System.out.println("Nearest neighbor class: " + Arrays.toString(nearestNeighborClass));
-        if (sufficient > insufficient)
-            System.out.println("Searched grade class: sufficient(" + sufficient + " sufficient and " + insufficient + " insufficient)");
-        else
-            System.out.println("Searched grade class: insufficient(" + sufficient + " sufficient and " + insufficient + " insufficient)");
-        return sufficient > insufficient;
-	}
+        if (veryGood == Collections.max(classes)){
+            System.out.println("Searched grade class: very good(" + veryGood + " very good, " + good + " good, " + sufficient + " sufficient and " + insufficient + " insufficient)");
+            return true;
+        }
+        else if (good == Collections.max(classes)){
+            System.out.println("Searched grade class: good(" + veryGood + " very good, " + good + " good, " + sufficient + " sufficient and " + insufficient + " insufficient)");
+            return true;
+        }
+        else if (sufficient == Collections.max(classes)){
+            System.out.println("Searched grade class: sufficient(" + veryGood + " very good, " + good + " good, " + sufficient + " sufficient and " + insufficient + " insufficient)");
+            return true;
+        }
+        else{
+            System.out.println("Searched grade class: insufficient(" + veryGood + " very good, " + good + " good, " + sufficient + " sufficient and " + insufficient + " insufficient)");
+            return false;
+        }
+    }
 }
 
 
